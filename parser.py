@@ -201,7 +201,7 @@ class Parser:
 					if words[1]	+ ' ' + words[2] in self.menu:
 						print(random.choice(order_placed_resp)+' : '+words[1]	+ ' ' + words[2])
 						if words[0] in order_no:
-							self.orders.append([words[1] + ' ' + words[2], order_no])
+							self.orders.append([words[1] + ' ' + words[2], words[0]])
 							notPlaced = False
 						else:
 							self.orders.append([words[1] + ' ' + words[2], order_no_w[words[0]]])

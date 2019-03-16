@@ -3,7 +3,9 @@ import yaml
 import random
 from hashlib import sha1
 import ispositive # To check if user is done placing the order
+from generate_bill import generate_bill
 from parser import Parser
+import priority
 
 '''
 TODO:
@@ -18,20 +20,25 @@ TODO:
 
 class Customer:
 	def __init__(self):
-		self.name = ''
-		self.phoneNo = ''
-		self.address = ''
-		self.drop_location = ''
-		self.curr_order_count = 0
-		self.orders = []
-		self.bill = 0
-		self.givenDiscount = False
+		self.name = '' #
+		self.priority = 'medium'
+		self.order_worth = 0 #
+		self.referral_bonus_check = None
+		self.referral_code = None
+		self.phoneNo = '' #
+		self.address = '' #
+		self.drop_location = '' #
+		self.curr_order_count = 0 #
+		self.orders = [] #
+		self.r_bill = 0 #
+		self.givenDiscount = False #
 		self.messages = yaml.load(open('./datasets/welcome.yml'))
-		self.last = ''
+		self.last = '' #
 		self.newUser = False
 		self.flag = False # becomes True when it is time to store the order
 		self.conn = sqlite3.connect('./customers.db')
 		self.c = self.conn.cursor()
+		self.no_of_orders = 1
 
 	def get_address_ref_code(self):
 		address_resp = self.messages['address']
@@ -48,7 +55,7 @@ class Customer:
 			elif ref_check[1] == 1:
 				ref_repeat = self.messages['referral-true']
 				print(random.choice(ref_repeat))
-				self.bill -= 100
+				self.r_bill -= 100
 				self.givenDiscount = True
 				self.c.execute("UPDATE customers SET referral_bonus_ck=? WHERE uid=?", (0, ref_check[0]))
 				self.conn.commit()
@@ -58,7 +65,7 @@ class Customer:
 		if ref_check == 0:
 			ref_repeat = self.messages['referral']
 			print(random.choice(ref_repeat))
-			self.bill -= 100
+			self.r_bill -= 100
 			self.c.execute("UPDATE customers SET referral_bonus_ck=? WHERE ph_no=?", (None, self.phoneNo))
 			self.conn.commit()
 
@@ -137,8 +144,53 @@ class Customer:
 			else:
 				parser.user_input()
 
+	def getPrice(self):
+		pi = yaml.load(open('./datasets/pizzas.yml'))
+		si = yaml.load(open('./datasets/sides.yml'))
+		be = yaml.load(open('./datasets/beverages.yml'))
+		pizzas, sides, beves = {}, {}, {}
+		for p in pi:
+			pizzas[p.lower().strip()] = {'price': pi[p]['price']}
+		for s in si:
+			sides[s.lower().strip()] = {'price': si[s]['price']}
+		for b in be:
+			beves[b.lower().strip()] = {'price': be[b]['price']}
+		total = 0
+		amount = 0
+		index = 0
+		for order in self.orders:
+			amount = 0
+			for quantity in range(int(order[1])):
+				if order[0] in pizzas:
+					total += pizzas[order[0]]['price']
+					amount += pizzas[order[0]]['price']
+				elif order[0] in sides:
+					total += sides[order[0]]['price']
+					amount += sides[order[0]]['price']
+				elif order[0] in beves:
+					total += beves[order[0]]['price']
+					amount += beves[order[0]]['price']
+			self.orders[index] = [order[0], amount]
+			index += 1
+		self.order_worth = total
+
 	def bill_statement(self):
-		pass
+		self.getPrice()
+		# check for priority
+		if self.newUser:
+			self.priority = 'medium'
+		else:
+			self.no_of_orders += self.c.execute("SELECT no_of_orders FROM customers WHERE ph_no=?", (self.phoneNo,)).fetchone()[0]
+			order_worth = self.c.execute("SELECT order_worth FROM customers WHERE ph_no=?", (self.phoneNo,)).fetchone()[0]
+			self.priority = priority.predict_user_priority([[self.no_of_orders, self.order_worth+order_worth, 150]])
+			self.order_worth += order_worth
+
+		if self.priority == 'medium':
+			self.referral_code = random.randint(100000,1000000)
+			self.referral_bonus_check = 1
+			print("You have received referral code: "+self.referral_code", which on passing on to your friends can avail you Rs.100 off on your next Pizza!")
+		bill = generate_bill(items=self.orders, name=self.name, address=self.address, priority=self.priority)
+		bill.print_bill()
 
 	def execution_order(self):
 		self.init_db()
@@ -146,7 +198,6 @@ class Customer:
 		self.checkPhoneNo()
 		self.welcome_greeting()
 		self.place_order()
-		print(self.orders)
 		self.bill_statement()
 
 if __name__ == '__main__':

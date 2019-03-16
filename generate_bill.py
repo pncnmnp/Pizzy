@@ -13,15 +13,10 @@ class generate_bill:
 	def generate_discount(self,total):
 		if self.priority == 'high':
 			discount = total*0.1      #10%discount applied
-		elif self.priority == 'medium':
+		elif self.priority == 'medium' or self.priority == 'low':
 			discount = 0
-			#set Discount amount
-		else:
-		   discount = 0
-			#set Discount amount
 		return discount
 
-	
 	def generate_amount(self):
 		total = 0
 		for i in self.items:
@@ -32,16 +27,15 @@ class generate_bill:
 		return total,discount
 
 	def print_bill(self):
-		print('Name: ',self.name)
-		print('Delivery Address: ',self.address)
-		print('Item             Amount')
+		print('Name:            \t',self.name)
+		print('Delivery Address:\t',self.address)
+		print('Item             \tAmount')
 		for i in self.items:
 			print(i[0],"            ",i[1])
 		total,discount = self.generate_amount()
-		print("Total Amount:     ",total)
-		print('Discount Applied: ',discount)
+		print("Total Amount:    \t",total)
+		print('Discount Applied:\t',discount)
 
 	def delivery_time(self):
 		time = 15 + int((maps.calculate_dist('kandivali,India',self.address)).split(" ")[0])
 		print('Your food will be delivered to you in ',time," minutes")
-		
