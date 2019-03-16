@@ -9,10 +9,10 @@ import priority
 
 '''
 TODO:
->> Get user priority in a static variable
->> Update the database with all the values
->> Customer priority implementation
 >> Customer Annoyance Level and Customer Support implementation
+>> Update the database with all the values [ done ]
+>> Get user priority in a static variable [ done ]
+>> Customer priority implementation [ done ]
 >> Order Menu display with keeping Note of current category [ done ]
 >> Time taken implementation [ done ]
 >> Bill display [ done ]
@@ -68,6 +68,14 @@ class Customer:
 			self.r_bill -= 100
 			self.c.execute("UPDATE customers SET referral_bonus_ck=? WHERE ph_no=?", (None, self.phoneNo))
 			self.conn.commit()
+
+	def update_db(self):
+		if self.newUser == True:
+			self.c.execute("INSERT INTO customers (name, address, ph_no, no_of_orders, order_worth, discount_worth, priority, referral_bonus_ck, referral_code) VALUES (?,?,?,?,?,?,?,?,?)", (self.name, self.address, self.phoneNo, self.no_of_orders, self.order_worth, 0, self.priority, self.referral_bonus_check, self.referral_code))
+		else:
+			self.c.execute("UPDATE customers SET no_of_orders=?, order_worth=?, discount_worth=?, priority=?, referral_bonus_ck=?, referral_code=? WHERE ph_no=?", (self.no_of_orders, self.order_worth, 50, self.priority, self.referral_bonus_check, self.referral_code, self.phoneNo))
+		self.conn.commit()
+		self.conn.close()
 
 	def checkPhoneNo(self):
 		self.phoneNo = self.getNo()
@@ -188,7 +196,7 @@ class Customer:
 		if self.priority == 'medium':
 			self.referral_code = random.randint(100000,1000000)
 			self.referral_bonus_check = 1
-			print("You have received referral code: "+self.referral_code", which on passing on to your friends can avail you Rs.100 off on your next Pizza!")
+			print("You have received referral code: "+str(self.referral_code)+", which on passing on to your friends can avail you Rs.100 off on your next Pizza!")
 		bill = generate_bill(items=self.orders, name=self.name, address=self.address, priority=self.priority)
 		bill.print_bill()
 
@@ -199,6 +207,7 @@ class Customer:
 		self.welcome_greeting()
 		self.place_order()
 		self.bill_statement()
+		self.update_db()
 
 if __name__ == '__main__':
 	o = Customer()
