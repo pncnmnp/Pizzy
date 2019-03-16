@@ -7,11 +7,11 @@ from parser import Parser
 
 '''
 TODO:
->> Order Menu display with keeping Note of current category [ done ]
 >> Get user priority in a static variable
 >> Update the database with all the values
 >> Customer priority implementation
 >> Customer Annoyance Level and Customer Support implementation
+>> Order Menu display with keeping Note of current category [ done ]
 >> Time taken implementation [ done ]
 >> Bill display [ done ]
 '''

@@ -8,18 +8,17 @@ from sys import exit
 
 '''
 TODO: 
->> ADD menu universal
 >> connect "change.py" for change menu ( add menu changes to change.py )
 >> add "trending" food items using trending.py [ done ]
->> increase the welcome.yml library
 >> bring in botprofile.yml, food.yml, greetings.yml, humor.yml [ done ]
+>> ADD menu universal [ done ]
 >> ADD the place order parsing [ done ]
 '''
 
 class Parser:
 	def __init__(self):
 		self.curr_input = ''
-		self.universals = ['cancel', 'top', 'hot', 'hungry', 'help', 'about', 'change', 'start over', 'menu', 'thirsty', 'quit']
+		self.universals = ['cancel', 'top', 'hot', 'hungry', 'help', 'about', 'change', 'menu', 'thirsty', 'quit']
 		self.curse_words = None
 		self.annoyance = 5
 		self.menu = list()
@@ -64,7 +63,7 @@ class Parser:
 
 	def universal_parse(self, words):
 		'''
-		"universals" are : 'cancel', 'top', 'hot', 'hungry', 'help', 'about', '@change', '@start over', '@menu', 'thirsty'
+		"universals" are : 'cancel', 'top', 'hot', 'hungry', 'help', 'about', '@change', '@menu', 'thirsty'
 		"words" are: list of user entered words
 		'''
 		key = [word for word in words if (word in self.universals)]
@@ -72,6 +71,17 @@ class Parser:
 		if key == 'cancel':
 			cancel_resp = self.messages['cancel']
 			return random.choice(cancel_resp)
+
+		elif key == 'menu':
+			pizzas = yaml.load(open('./datasets/pizzas.yml'))
+			sides = yaml.load(open('./datasets/sides.yml'))
+			beves = yaml.load(open('./datasets/beverages.yml'))
+			for pizza in pizzas:
+				print(pizza + '\t: ' + ','.join(pizzas[pizza]['ingredients']) + '   Price: Rs.'+ str(pizzas[pizza]['price']))
+			for side in sides:
+				print(side + '\t: ' + ','.join(sides[side]['ingredients']) + '   Price: Rs.'+ str(sides[side]['price']))
+			for beve in beves:
+				print(beve + '\t:' + '   Price: Rs.'+ str(beves[beve]['price']))
 
 		elif key == 'top' or key == 'hot' or key == 'hungry':
 			# Trending food method will come here
@@ -126,7 +136,9 @@ class Parser:
 		elif any(word in words for word in self.curse_words):
 			print(self.curse_parse())
 		elif any(word in words for word in self.universals):
-			print(self.universal_parse(words))
+			val = self.universal_parse(words)
+			if val != None:
+				print(val)
 		else:
 			pos_check = ispositive.is_positive(self.curr_input)
 			if pos_check == False:
