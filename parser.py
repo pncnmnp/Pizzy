@@ -60,14 +60,17 @@ class Parser:
 			pass
 		elif key == 'help' or key == 'about':
 			help_resp = self.messages['help']
+			self.annoyance -= 2
 			return random.choice(help_resp)
 
 	def curse_parse(self):
 		curse_resp = self.messages['curse']
+		self.annoyance -= 4
 		return random.choice(curse_resp)
 
 	def level_one_parse(self):
 		words = self.curr_input.split()
+		# GENERAL PURPOSE TEXT WILL BE CHECKED BEFORE ALL THE BELOW CODE!!!
 		if any(word in words for word in self.curse_words):
 			print(self.curse_parse())
 		elif any(word in words for word in self.universals):

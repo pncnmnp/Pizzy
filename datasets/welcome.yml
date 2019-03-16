@@ -8,13 +8,20 @@ conversations:
 - Chef says "Fire on Sir, Place your order!"
 - Let's start with the baking! What do you want to fill your tummy with ?
 - Grrrrr. Is that your tummy growling ? Let's begin the order!
-- Welcome to pizzy the best Pizza in town!
+- We Welcome you to pizzy the best Pizza in town!
+address:
+- Look's like it's your first time! Will need an address Sir -
+- Till the time we import fairies, we will need your address -
+- Can you provide an address please -
 prior:
 - Welcome! Good to see you back.
 - We missed you! Seeing your presence, our Chefs will be on fire tonight!
 - We are glad to see you again!
+referral-to-avail:
+- Do you have a referral code to be availed -
+- Has any fairy ever told you about a magic number -
 referral:
-- Your Referral code has been availed! As a thank you gesture we will be offering you a discount on this order!
+- Your Referral code has been availed! As a thank you gesture we will be offering you a Rs. 100 discount on this order!
 allergy:
 - Quick Allergy check, Should we look out for any of your allergies ?
 - Do you have any allergies, our Chefs should look out for ?
