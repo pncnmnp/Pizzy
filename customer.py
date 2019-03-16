@@ -16,7 +16,7 @@ class Customer:
 		self.last = ''
 		self.newUser = False
 		self.flag = False # becomes True when it is time to store the order
-		conn = sqlite3.connect('./customers.db')
+		self.conn = sqlite3.connect('./customers.db')
 		self.c = conn.cursor()
 
 	def get_address_ref_code(self):
@@ -32,14 +32,21 @@ class Customer:
 			if ref_check[1] == False:
 				ref_repeat = self.messages['referral-repeat']
 			elif ref_check[1] == True:
-				ref_repeat = self.messages['referral']
+				ref_repeat = self.messages['referral-true']
 				print(random.choice(ref_repeat))
 				self.bill -= 100
 				self.givenDiscount = True
 				self.c.execute("UPDATE customers SET referral_bonus_ck=? WHERE uid=?", (False, ref_check[0]))
+				self.conn.commit()
 
 	def referral_bonus_ck(self):
-		pass
+		ref_check = self.c.execute("SELECT referral_bonus_ck FROM customers WHERE ph_no=?", (self.phoneNo,)).fetchone()[0]
+		if ref_check == False:
+			ref_repeat = self.messages['referral']
+			print(random.choice(ref_repeat))
+			self.bill -= 100
+			self.c.execute("UPDATE customers SET referral_bonus_ck=? WHERE ph_no=?", (None, self.phoneNo))
+			self.conn.commit()
 
 	def checkPhoneNo(self):
 		self.phoneNo = self.getNo()

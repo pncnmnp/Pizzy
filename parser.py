@@ -36,7 +36,7 @@ class Parser:
 		elif inp == True:
 			return sent.translate(remove_punct_dict)
 
-	def lower_case(self, sent='', inp=False):
+		def lower_case(self, sent='', inp=False):
 		if inp == False:
 			self.curr_input = self.curr_input.strip().lower()
 		elif inp == True:

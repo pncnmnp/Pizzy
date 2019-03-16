@@ -31,7 +31,6 @@ def predict_user_priority(data):      #data is a 2D list
     
 
 
-ans = predict_user_priority([[1,100,25]])
-print(ans)
-print(type(ans))
-      
+# ans = predict_user_priority([[1,100,25]])
+# print(ans)
+# print(type(ans))
