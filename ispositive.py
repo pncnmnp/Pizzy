@@ -10,5 +10,4 @@ def is_positive(sentence):
     for word in TextBlob(sentence).words:
         word=word.lemmatize().lower()
         score+=words_dict.get(word,0)
-    return score>=0 
-print(is_positive("Hello"))
+    return score>=0

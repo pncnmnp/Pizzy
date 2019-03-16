@@ -1,10 +1,15 @@
 import string
+import yaml
+import random
+import ispositive
 
 class Parser:
 	def __init__(self):
 		self.curr_input = ''
 		self.universals = ['cancel', 'top', 'hot', 'hungry', 'help', 'about', 'change', 'start over', 'menu', 'thirsty']
 		self.curse_words = None
+		self.annoyance = 5
+		self.messages = yaml.load(open('./datasets/welcome.yml'))
 
 	def load_curse(self):
 		with open('./datasets/curse_words.txt') as file:
@@ -20,6 +25,7 @@ class Parser:
 		if command_line == True:
 			self.curr_input = input('>> ')
 			self.remove_punct()
+			self.lower_case()
 		else:
 			pass
 
@@ -36,6 +42,50 @@ class Parser:
 		elif inp == True:
 			return sent.strip().lower()
 
+	def universal_parse(self, words):
+		'''
+		"universals" are : 'cancel', 'top', 'hot', 'hungry', 'help', 'about', '@change', '@start over', '@menu', 'thirsty'
+		"words" are: list of user entered words
+		'''
+		key = [word for word in words if (word in self.universals)]
+		key = key[0]
+		if key == 'cancel':
+			cancel_resp = self.messages['cancel']
+			return random.choice(cancel_resp)
+		elif key == 'top' or key == 'hot' or key == 'hungry':
+			# Trending food method will come here
+			pass
+		elif key == 'thirsty':
+			# Trending beverages will come here
+			pass
+		elif key == 'help' or key == 'about':
+			help_resp = self.messages['help']
+			return random.choice(help_resp)
+
+	def curse_parse(self):
+		curse_resp = self.messages['curse']
+		return random.choice(curse_resp)
+
 	def level_one_parse(self):
-		words = self.curr_input()
+		words = self.curr_input.split()
+		if any(word in words for word in self.curse_words):
+			print(self.curse_parse())
+		elif any(word in words for word in self.universals):
+			print(self.universal_parse(words))
+		else:
+			pos_check = ispositive.is_positive(self.curr_input)
+			print(pos_check)
+			if pos_check == False:
+				help_resp = self.messages['help']
+				print(random.choice(help_resp))
+			elif pos_check == True:
+				self.order_parse()
+
+	def order_parse(self):
 		pass
+
+if __name__ == '__main__':
+	o = Parser()
+	o.user_input()
+	o.load_curse()
+	o.level_one_parse()

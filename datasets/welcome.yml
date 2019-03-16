@@ -1,12 +1,16 @@
 categories:
 - welcome
+help:
+- Hi there! This is Pizzy, a pizza delivery chatbot! 
+  You can type "menu" for menu and "order <food-item>" for food
 conversations:
 - Fresh Pizza's are being baked by us every minute, Let's start with yours!
 - Chef says "Fire on Sir, Place your order!"
 - Let's start with the baking! What do you want to fill your tummy with ?
 - Grrrrr. Is that your tummy growling ? Let's begin the order!
+- Welcome to pizzy the best Pizza in town!
 prior:
-- Welcome! Good to see you back :-)
+- Welcome! Good to see you back.
 - We missed you! Seeing your presence, our Chefs will be on fire tonight!
 - We are glad to see you again!
 referral:
@@ -16,3 +20,14 @@ allergy:
 - Do you have any allergies, our Chefs should look out for ?
 invalid:
 - I'm sorry, I didn't understand you. I am a Pizza delivery bot, If you need help just enter "help"
+referral-invalid:
+- Looks like the referral code does not exist.
+referral-repeat:
+- Sorry you have already availed a referral code.
+curse:
+- Sorry to annoy you friend! please enter "help" for any further assistance.
+- WOH! Chill Sir, You can use "help" anytime!
+bill-empty:
+- Hey there! kindly add more items to the cart as you do not fullfil the minimum delivery criteria.
+cancel:
+- I see you want to cancel this order. For feedback please mail us on pizzy-customer-care@gmail.com.
