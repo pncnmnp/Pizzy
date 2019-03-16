@@ -1,0 +1,18 @@
+categories:
+- welcome
+conversations:
+- Fresh Pizza's are being baked by us every minute, Let's start with yours!
+- Chef says "Fire on Sir, Place your order!"
+- Let's start with the baking! What do you want to fill your tummy with ?
+- Grrrrr. Is that your tummy growling ? Let's begin the order!
+prior:
+- Welcome! Good to see you back :-)
+- We missed you! Seeing your presence, our Chefs will be on fire tonight!
+- We are glad to see you again!
+referral:
+- Your Referral code has been availed! As a thank you gesture we will be offering you a discount on this order!
+allergy:
+- Quick Allergy check, Should we look out for any of your allergies ?
+- Do you have any allergies, our Chefs should look out for ?
+invalid:
+- I'm sorry, I didn't understand you. I am a Pizza delivery bot, If you need help just enter "help"
