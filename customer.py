@@ -6,7 +6,7 @@ from hashlib import sha1
 '''
 TODO:
 >> Customer priority implementation
->> Menu display with keeping Note of current category
+>> Order Menu display with keeping Note of current category
 >> Time taken implementation [ done ]
 >> Bill display [ done ]
 >> Customer Annoyance Level and Customer Support implementation

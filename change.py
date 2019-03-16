@@ -34,7 +34,5 @@ def change(orders:list):
             if user_input == o.lower():
                 modify(orders,o) 
                 break
-            
-
 
 change(['Pizza A','Beverage B','Item 3'])

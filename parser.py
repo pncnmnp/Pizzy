@@ -2,12 +2,13 @@ import string
 import yaml
 import random
 import ispositive
+import trending
 from nltk.corpus import stopwords
 
 '''
 TODO: 
 >> connect "change.py" for change menu ( add menu changes to change.py )
->> add "trending" food items using trending.py
+>> add "trending" food items using trending.py [ done ]
 >> increase the welcome.yml library
 >> bring in botprofile.yml, food.yml, greetings.yml, humor.yml [ done ]
 >> ADD the place order parsing [ done ]
@@ -69,12 +70,19 @@ class Parser:
 		if key == 'cancel':
 			cancel_resp = self.messages['cancel']
 			return random.choice(cancel_resp)
+
 		elif key == 'top' or key == 'hot' or key == 'hungry':
 			# Trending food method will come here
-			pass
+			top_food = trending.read_csv_file("./datasets/menu.csv")
+			food_resp = self.messages['top-food']
+			return(random.choice(food_resp)+top_food[0][0]+', '+top_food[0][1]+', '+top_food[1][0])
+
 		elif key == 'thirsty':
 			# Trending beverages will come here
-			pass
+			top_beve = trending.read_csv_file("./datasets/menu.csv")
+			beve_resp = self.messages['top-beve']
+			return(random.choice(beve_resp)+top_beve[2][0]+', '+top_beve[2][1]+', '+top_beve[2][2])
+
 		elif key == 'help' or key == 'about':
 			help_resp = self.messages['help']
 			self.annoyance -= 2
@@ -106,7 +114,6 @@ class Parser:
 
 	def level_one_parse(self):
 		words = self.curr_input.split()
-		# GENERAL PURPOSE TEXT WILL BE CHECKED BEFORE ALL THE BELOW CODE!!!
 		if self.curr_input in self.generic_dict:
 			print(random.choice((self.generic_dict[self.curr_input])))
 		elif any(word in words for word in self.curse_words):
@@ -135,6 +142,7 @@ class Parser:
 	def order_parse(self, words):
 		'''
 		words : list containing words which contains the order
+		This is the level two parser
 		'''
 		order_placed_resp = self.messages['order-placed']
 		restricted_words = ['for', 'have', 'give']

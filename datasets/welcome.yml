@@ -3,6 +3,12 @@ categories:
 help:
 - Hi there! This is Pizzy, a pizza delivery chatbot! 
   You can type "menu" for menu and "order <food-item>" for food
+top-food:
+- Grrrrrr. I can hear your tummy growling. Here are our top food items - 
+- Hungry for the best! Search no where! Here are our top food items - 
+top-beve:
+- I have many things to quench that thirst of your - 
+- To quench your thirst, I recommend these top items - 
 conversations:
 - Fresh Pizza's are being baked by us every minute, Let's start with yours!
 - Chef says "Fire on Sir, Place your order!"
