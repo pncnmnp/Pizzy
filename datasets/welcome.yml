@@ -3,9 +3,15 @@ categories:
 help:
 - Hi there! This is Pizzy, a pizza delivery chatbot! 
   You can type "menu" for menu and "order <food-item>" for food
+quit:
+- Sorry to see you leave! Provide us your valuable feedback at pizzy-customer-care@gmail.com.
 top-food:
 - Grrrrrr. I can hear your tummy growling. Here are our top food items - 
 - Hungry for the best! Search no where! Here are our top food items - 
+menu:
+- Want to see what our talented Chef's can cook, type "menu"
+- Check our Chef's pride by typing "menu"
+- Our lip-smaking choices can be accessed by typing "menu"
 top-beve:
 - I have many things to quench that thirst of your - 
 - To quench your thirst, I recommend these top items - 
@@ -19,6 +25,7 @@ order-placed:
 - Got it! Order Placed
 - Copy that Sir! Order Placed
 - Let me scribble it down
+- Let me jot that down
 address:
 - Look's like it's your first time! Will need an address Sir -
 - Till the time we import fairies, we will need your address -

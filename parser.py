@@ -4,9 +4,11 @@ import random
 import ispositive
 import trending
 from nltk.corpus import stopwords
+from sys import exit
 
 '''
 TODO: 
+>> ADD menu universal
 >> connect "change.py" for change menu ( add menu changes to change.py )
 >> add "trending" food items using trending.py [ done ]
 >> increase the welcome.yml library
@@ -17,7 +19,7 @@ TODO:
 class Parser:
 	def __init__(self):
 		self.curr_input = ''
-		self.universals = ['cancel', 'top', 'hot', 'hungry', 'help', 'about', 'change', 'start over', 'menu', 'thirsty']
+		self.universals = ['cancel', 'top', 'hot', 'hungry', 'help', 'about', 'change', 'start over', 'menu', 'thirsty', 'quit']
 		self.curse_words = None
 		self.annoyance = 5
 		self.menu = list()
@@ -88,6 +90,11 @@ class Parser:
 			self.annoyance -= 2
 			return random.choice(help_resp)
 
+		elif key == 'quit':
+			quit_resp = self.messages['quit']
+			print(random.choice(quit_resp))
+			exit(0)
+
 	def generic_responses(self):
 		greet = yaml.load(open('./datasets/greetings.yml'))['conversations']
 		humor = yaml.load(open('./datasets/humor.yml'))['conversations']
@@ -152,32 +159,67 @@ class Parser:
 
 		order_words = ['want', 'get', 'for', 'order', 'have', 'give']
 		order_no_w = {'one':1, 'two':2, 'three':3, 'four':4, 'five':5, 'six':6, 'seven':7, 'eight':8, 'nine':9}
-		order_no = [1,2,3,4,5,6,7,8,9]
-		for word in order_words:
-			if word in words:
-				if words[words.index(word)+1] in self.menu:
-					print(random.choice(order_placed_resp)+' : '+words[words.index(word)+1])
-					self.orders.append([words[words.index(word)+1], 1])
+		order_no = ['1','2','3','4','5','6','7','8','9']
 
-				elif words[words.index(word)+2] in self.menu and words[words.index(word)+1] in order_no_w:
-					print(random.choice(order_placed_resp)+' : '+words[words.index(word)+2])
-					self.orders.append([words[words.index(word)+2], order_no_w[words[words.index(word)+1]]])
+		notPlaced = True
 
-				elif words[words.index(word)+2] in self.menu and words[words.index(word)+1] in order_no:
-					print(random.choice(order_placed_resp)+' : '+words[words.index(word)+2])
-					self.orders.append([words[words.index(word)+2], words[words.index(word)+1]])
+		if len(words) == 1 or len(words) == 2 or len(words) == 3:
+			if len(words) == 2:
+				if words[0]+' '+words[1] in self.menu:
+					print(random.choice(order_placed_resp)+' : '+words[0]+' '+words[1])
+					self.orders.append([words[0]+' '+words[1], 1])
+					notPlaced = False
+				elif ((words[0] in order_no) or (words[0] in order_no_w)) and words[1] in self.menu:
+					print(random.choice(order_placed_resp)+' : '+words[1])
+					if words[0] in order_no:
+						self.orders.append([words[1], words[0]])
+						notPlaced = False
+					else:	
+						self.orders.append([words[1], order_no_w[words[0]]])
+						notPlaced = False
 
-				elif words[words.index(word)+1]+' '+words[words.index(word)+2] in self.menu:
-					print(random.choice(order_placed_resp)+' : '+words[words.index(word)+1]+' '+words[words.index(word)+2])
-					self.orders.append([words[words.index(word)+1]+' '+words[words.index(word)+2], 1])
+			elif len(words) == 1:
+				if words[0] in self.menu:
+					print(random.choice(order_placed_resp)+' : '+words[0])
+					self.orders.append([words[0], 1])
+					notPlaced = False
 
-				elif words[words.index(word)+2]+' '+words[words.index(word)+3] in self.menu and words[words.index(word)+1] in order_no_w:
-					print(random.choice(order_placed_resp)+' : '+words[words.index(word)+2]+' '+words[words.index(word)+3])
-					self.orders.append([words[words.index(word)+2]+' '+words[words.index(word)+3], order_no_w[words[words.index(word)+1]]])
+			elif len(words) == 3:
+				if words[0] in order_no or words[0] in order_no_w:
+					if words[1]	+ ' ' + words[2] in self.menu:
+						print(random.choice(order_placed_resp)+' : '+words[1]	+ ' ' + words[2])
+						if words[0] in order_no:
+							self.orders.append([words[1] + ' ' + words[2], order_no])
+							notPlaced = False
+						else:
+							self.orders.append([words[1] + ' ' + words[2], order_no_w[words[0]]])
+							notPlaced = False
+		elif notPlaced == True:
+			for word in order_words:
+				if word in words:
+					if words[words.index(word)+1] in self.menu:
+						print(random.choice(order_placed_resp)+' : '+words[words.index(word)+1])
+						self.orders.append([words[words.index(word)+1], 1])
 
-				elif words[words.index(word)+2]+' '+words[words.index(word)+3] in self.menu and words[words.index(word)+1] in order_no:
-					print(random.choice(order_placed_resp)+' : '+words[words.index(word)+2]+' '+words[words.index(word)+3])
-					self.orders.append([words[words.index(word)+2]+' '+words[words.index(word)+3], words[words.index(word)+1]])
+					elif words[words.index(word)+2] in self.menu and words[words.index(word)+1] in order_no_w:
+						print(random.choice(order_placed_resp)+' : '+words[words.index(word)+2])
+						self.orders.append([words[words.index(word)+2], order_no_w[words[words.index(word)+1]]])
+
+					elif words[words.index(word)+2] in self.menu and words[words.index(word)+1] in order_no:
+						print(random.choice(order_placed_resp)+' : '+words[words.index(word)+2])
+						self.orders.append([words[words.index(word)+2], words[words.index(word)+1]])
+
+					elif words[words.index(word)+1]+' '+words[words.index(word)+2] in self.menu:
+						print(random.choice(order_placed_resp)+' : '+words[words.index(word)+1]+' '+words[words.index(word)+2])
+						self.orders.append([words[words.index(word)+1]+' '+words[words.index(word)+2], 1])
+
+					elif words[words.index(word)+2]+' '+words[words.index(word)+3] in self.menu and words[words.index(word)+1] in order_no_w:
+						print(random.choice(order_placed_resp)+' : '+words[words.index(word)+2]+' '+words[words.index(word)+3])
+						self.orders.append([words[words.index(word)+2]+' '+words[words.index(word)+3], order_no_w[words[words.index(word)+1]]])
+
+					elif words[words.index(word)+2]+' '+words[words.index(word)+3] in self.menu and words[words.index(word)+1] in order_no:
+						print(random.choice(order_placed_resp)+' : '+words[words.index(word)+2]+' '+words[words.index(word)+3])
+						self.orders.append([words[words.index(word)+2]+' '+words[words.index(word)+3], words[words.index(word)+1]])
 
 if __name__ == '__main__':
 	o = Parser()

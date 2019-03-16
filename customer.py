@@ -2,14 +2,18 @@ import sqlite3
 import yaml
 import random
 from hashlib import sha1
+import ispositive # To check if user is done placing the order
+from parser import Parser
 
 '''
 TODO:
+>> Order Menu display with keeping Note of current category [ done ]
+>> Get user priority in a static variable
+>> Update the database with all the values
 >> Customer priority implementation
->> Order Menu display with keeping Note of current category
+>> Customer Annoyance Level and Customer Support implementation
 >> Time taken implementation [ done ]
 >> Bill display [ done ]
->> Customer Annoyance Level and Customer Support implementation
 '''
 
 class Customer:
@@ -18,6 +22,7 @@ class Customer:
 		self.phoneNo = ''
 		self.address = ''
 		self.drop_location = ''
+		self.curr_order_count = 0
 		self.orders = []
 		self.bill = 0
 		self.givenDiscount = False
@@ -109,11 +114,40 @@ class Customer:
 		print(random.choice(welc_resp))
 		return random.choice(welc_resp)
 
+	def place_order(self):
+		menu_resp = self.messages['menu']
+		print(random.choice(menu_resp))
+		parser = Parser()
+		order_count = 0
+		done = False
+		parser.user_input()
+		while done == False:
+			parser.level_one_parse()
+			if len(parser.orders) > order_count:
+				order_count = len(parser.orders)
+				check = input("Do you want something else\n>> ")
+				if ispositive.is_positive(check) == False:
+					done = True
+					self.orders = parser.orders
+					self.curr_order_count = order_count
+				else:
+					check = parser.lower_case(inp=True, sent=check)
+					check = parser.remove_punct(inp=True, sent=check)
+					parser.curr_input = check
+			else:
+				parser.user_input()
+
+	def bill_statement(self):
+		pass
+
 	def execution_order(self):
 		self.init_db()
 		self.getName()
 		self.checkPhoneNo()
 		self.welcome_greeting()
+		self.place_order()
+		print(self.orders)
+		self.bill_statement()
 
 if __name__ == '__main__':
 	o = Customer()
