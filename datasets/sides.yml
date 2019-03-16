@@ -1,0 +1,36 @@
+---
+'garlic bread':
+  ingredients:
+    -olives
+    -mozzarella
+    -bread
+    -oregano
+    -corn
+  price: 200
+'choco lava cake':
+  ingredients:
+    -chocolate
+    -bread
+    -cream
+  price: 100
+'Burger pizza':
+  ingredients:
+    -bread
+    -cheese
+    -tomato
+    -potato
+  price: 150
+'pasta':
+  ingredients:
+    -olives
+    -cheese
+    -macroni
+    -oregano
+    -pepperika
+  price: 140
+'french fries':
+  ingredients:
+    -potato
+    -redpepper
+  price: 70
+    

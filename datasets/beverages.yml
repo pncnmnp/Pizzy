@@ -1,0 +1,11 @@
+---
+  'Coke':
+    price: 40
+  'Fanta':
+    price: 40
+  'mineral water':
+    price: 20
+  'ginger lemon soda':
+    price: 50
+  'juice':
+    price: 40
