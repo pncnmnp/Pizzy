@@ -2,14 +2,15 @@ import string
 import yaml
 import random
 import ispositive
+from nltk.corpus import stopwords
 
 '''
 TODO: 
->> connect change.py for change menu ( add menu changes to change.py )
->> add trending food items using trending.py
+>> connect "change.py" for change menu ( add menu changes to change.py )
+>> add "trending" food items using trending.py
 >> increase the welcome.yml library
 >> bring in botprofile.yml, food.yml, greetings.yml, humor.yml [ done ]
->> ADD the place order implementation
+>> ADD the place order parsing [ done ]
 '''
 
 class Parser:
@@ -18,10 +19,14 @@ class Parser:
 		self.universals = ['cancel', 'top', 'hot', 'hungry', 'help', 'about', 'change', 'start over', 'menu', 'thirsty']
 		self.curse_words = None
 		self.annoyance = 5
+		self.menu = list()
+		self.orders = list()
+		self.stopwords = stopwords.words('english')
 		self.generic_dict = dict()
 		self.messages = yaml.load(open('./datasets/welcome.yml'))
 		self.load_curse()
 		self.generic_responses()
+		self.menu_items()
 
 	def load_curse(self):
 		with open('./datasets/curse_words.txt') as file:
@@ -52,7 +57,7 @@ class Parser:
 		if inp == False:
 			self.curr_input = self.curr_input.strip().lower()
 		elif inp == True:
-			return sent.strip().lower()
+			return sent.lower().strip()
 
 	def universal_parse(self, words):
 		'''
@@ -87,8 +92,8 @@ class Parser:
 
 	def generic_resp_store(self, conversations):
 		for conv in conversations:
-			conv[0] = self.lower_case(inp=True, sent=conv[0])
 			conv[0] = self.remove_punct(inp=True, sent=conv[0])
+			conv[0] = self.lower_case(inp=True, sent=conv[0])
 			if conv[0] in self.generic_dict:
 				self.generic_dict[conv[0]].append(conv[1])
 			else:
@@ -114,10 +119,57 @@ class Parser:
 				help_resp = self.messages['help']
 				print(random.choice(help_resp))
 			elif pos_check == True:
-				self.order_parse()
+				self.order_parse(words)
 
-	def order_parse(self):
-		pass
+	def menu_items(self):
+		pizza = [food for food in list(yaml.load(open('./datasets/pizzas.yml')).keys())]
+		sides = [food for food in list(yaml.load(open('./datasets/sides.yml')).keys())]
+		beve = [food for food in list(yaml.load(open('./datasets/beverages.yml')).keys())]
+		self.menu = pizza + sides + beve
+		index = 0
+		for food in self.menu:
+			self.menu[index] = self.remove_punct(inp=True, sent=food)
+			self.menu[index] = self.lower_case(sent=self.menu[index], inp=True)
+			index += 1
+
+	def order_parse(self, words):
+		'''
+		words : list containing words which contains the order
+		'''
+		order_placed_resp = self.messages['order-placed']
+		restricted_words = ['for', 'have', 'give']
+		for word in words:
+			if word in self.stopwords and word not in restricted_words:
+				words.remove(word)
+
+		order_words = ['want', 'get', 'for', 'order', 'have', 'give']
+		order_no_w = {'one':1, 'two':2, 'three':3, 'four':4, 'five':5, 'six':6, 'seven':7, 'eight':8, 'nine':9}
+		order_no = [1,2,3,4,5,6,7,8,9]
+		for word in order_words:
+			if word in words:
+				if words[words.index(word)+1] in self.menu:
+					print(random.choice(order_placed_resp)+' : '+words[words.index(word)+1])
+					self.orders.append([words[words.index(word)+1], 1])
+
+				elif words[words.index(word)+2] in self.menu and words[words.index(word)+1] in order_no_w:
+					print(random.choice(order_placed_resp)+' : '+words[words.index(word)+2])
+					self.orders.append([words[words.index(word)+2], order_no_w[words[words.index(word)+1]]])
+
+				elif words[words.index(word)+2] in self.menu and words[words.index(word)+1] in order_no:
+					print(random.choice(order_placed_resp)+' : '+words[words.index(word)+2])
+					self.orders.append([words[words.index(word)+2], words[words.index(word)+1]])
+
+				elif words[words.index(word)+1]+' '+words[words.index(word)+2] in self.menu:
+					print(random.choice(order_placed_resp)+' : '+words[words.index(word)+1]+' '+words[words.index(word)+2])
+					self.orders.append([words[words.index(word)+1]+' '+words[words.index(word)+2], 1])
+
+				elif words[words.index(word)+2]+' '+words[words.index(word)+3] in self.menu and words[words.index(word)+1] in order_no_w:
+					print(random.choice(order_placed_resp)+' : '+words[words.index(word)+2]+' '+words[words.index(word)+3])
+					self.orders.append([words[words.index(word)+2]+' '+words[words.index(word)+3], order_no_w[words[words.index(word)+1]]])
+
+				elif words[words.index(word)+2]+' '+words[words.index(word)+3] in self.menu and words[words.index(word)+1] in order_no:
+					print(random.choice(order_placed_resp)+' : '+words[words.index(word)+2]+' '+words[words.index(word)+3])
+					self.orders.append([words[words.index(word)+2]+' '+words[words.index(word)+3], words[words.index(word)+1]])
 
 if __name__ == '__main__':
 	o = Parser()

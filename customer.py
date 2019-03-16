@@ -3,6 +3,15 @@ import yaml
 import random
 from hashlib import sha1
 
+'''
+TODO:
+>> Customer priority implementation
+>> Menu display with keeping Note of current category
+>> Time taken implementation [ done ]
+>> Bill display [ done ]
+>> Customer Annoyance Level and Customer Support implementation
+'''
+
 class Customer:
 	def __init__(self):
 		self.name = ''

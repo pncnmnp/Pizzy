@@ -9,6 +9,10 @@ conversations:
 - Let's start with the baking! What do you want to fill your tummy with ?
 - Grrrrr. Is that your tummy growling ? Let's begin the order!
 - We Welcome you to pizzy the best Pizza in town!
+order-placed:
+- Got it! Order Placed
+- Copy that Sir! Order Placed
+- Let me scribble it down
 address:
 - Look's like it's your first time! Will need an address Sir -
 - Till the time we import fairies, we will need your address -
