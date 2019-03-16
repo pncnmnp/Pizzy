@@ -1,0 +1,41 @@
+<html lang="en">
+
+<head>
+  <title>Document</title>
+  <link href="{{url_for('static',filename='style.css')}}" rel="stylesheet" type"text/css"> </head> <body>
+
+  <div class="container">
+    <div id="response"><span class="red">Pizza Bot:</span> Hello! Type something for me.</div>
+
+    <center>
+      <input id="userInput" type="text" placeholder="Yes right here" />
+
+      <input type="submit" id="chatSend" value="send" onclick="reply()" onkeydown="enter()" />
+
+      <p>The chat bot responds to basic text.</p>
+    </center>
+  </div>
+  <script>
+    window.setInterval(function () {
+      var elem =
+        document.getElementById("response");
+      elem.scrollTop = elem.scrollHeight;
+    }, 500);
+
+    document.addEventListener("keyup", function (e) {
+      if (e.keyCode == 13) {
+        reply();
+      }
+    });
+    function reply() {
+      var input = document.getElementById("userInput").value;
+      var chatbox = document.getElementById("response");
+      var userInput = input.toUpperCase();
+      chatbox.innerHTML += "<br/> <span style='color: blue;'>You:</span> " + input;
+      document.getElementById("userInput").value = '';
+    }
+  </script>
+
+  </body>
+
+</html>
