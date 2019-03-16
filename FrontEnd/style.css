@@ -1,0 +1,77 @@
+body{
+  margin-left: 100px;
+  margin-right: 250px;
+}
+
+user{
+  margin-left: 300px;
+  margin-right: auto;
+  margin-top: -37px;
+}
+
+
+#chatbox{
+  border-style: solid;
+    /* top right bottom left */
+    padding: 200px 50px 0px 100px;
+}
+.container {
+	margin: 0 auto;
+	height: 80%;
+	width: 80%;
+	background: #ddd;
+	border-radius: 5px;
+	padding: 10px;
+	resize: vertical;
+}
+input[type=text], input[type=send]{
+	font-size: 1.4em;
+	text-align: left;
+	margin: 15px auto 0 auto;
+	padding: 10px;
+	display: inline;
+	font-family: verdana;
+}	
+input[type=text]{
+	width: 70%;
+	font-style: italic;
+	border-bottom: 1px solid #666;
+	border-left: 0px;
+	border-right: 0px;
+	border-top: 0px;
+	background: #eee;
+	resize: vertical;
+}
+
+input[type=submit]{
+	width: 25%;
+  height: 3em;
+	text-align: center;
+	font-family: verdana;
+	font-size: 15px;
+}
+
+
+#response {
+	margin: 0 auto;
+	height: 15em;
+	width: 95%;
+	padding: 8px 29px 8px 22px;
+	border: 0px solid #eee;
+	font-family: Verdana;
+	font-size: 1.4em;
+	overflow: auto;
+	background: rgba(255,255,255,.5);
+  resize: vertical;
+}
+   
+ .blue {
+	color: blue;
+}
+
+.red {
+	color: red;
+}
+
+
+
