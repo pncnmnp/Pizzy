@@ -1,0 +1,35 @@
+---
+'Pizza Alla Napoletana (Napoli) ':
+  ingridents:
+  - anchovies
+  - mozzarella
+  - tomatoes
+  price: 320
+'Pizza Marinara ':
+  ingridents:
+  - garlic
+  - anchovies
+  - oregano
+  price: 450
+'Pizza Pugliese ':
+  ingridents:
+  - onions
+  - mozzarella
+  - tomatoes
+  - olives
+  price: 260
+'Pizza Capricciosa ':
+  ingridents:
+  - olives
+  - artichoke
+  - hearts
+  - egg
+  - prosciutto
+  - mushrooms
+  price: 700
+'Pizza Veronese ':
+  ingridents:
+  - Prosciutto crudo
+  - mushrooms
+  price: 300
+
