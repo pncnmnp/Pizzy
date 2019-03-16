@@ -3,13 +3,25 @@ import yaml
 import random
 import ispositive
 
+'''
+TODO: 
+>> connect change.py for change menu ( add menu changes to change.py )
+>> add trending food items using trending.py
+>> increase the welcome.yml library
+>> bring in botprofile.yml, food.yml, greetings.yml, humor.yml [ done ]
+>> ADD the place order implementation
+'''
+
 class Parser:
 	def __init__(self):
 		self.curr_input = ''
 		self.universals = ['cancel', 'top', 'hot', 'hungry', 'help', 'about', 'change', 'start over', 'menu', 'thirsty']
 		self.curse_words = None
 		self.annoyance = 5
+		self.generic_dict = dict()
 		self.messages = yaml.load(open('./datasets/welcome.yml'))
+		self.load_curse()
+		self.generic_responses()
 
 	def load_curse(self):
 		with open('./datasets/curse_words.txt') as file:
@@ -36,7 +48,7 @@ class Parser:
 		elif inp == True:
 			return sent.translate(remove_punct_dict)
 
-		def lower_case(self, sent='', inp=False):
+	def lower_case(self, sent='', inp=False):
 		if inp == False:
 			self.curr_input = self.curr_input.strip().lower()
 		elif inp == True:
@@ -63,6 +75,25 @@ class Parser:
 			self.annoyance -= 2
 			return random.choice(help_resp)
 
+	def generic_responses(self):
+		greet = yaml.load(open('./datasets/greetings.yml'))['conversations']
+		humor = yaml.load(open('./datasets/humor.yml'))['conversations']
+		food = yaml.load(open('./datasets/food.yml'))['conversations']
+		botprofile = yaml.load(open('./datasets/botprofile.yml'))['conversations']
+		self.generic_resp_store(greet)
+		self.generic_resp_store(humor)
+		self.generic_resp_store(food)
+		self.generic_resp_store(botprofile)
+
+	def generic_resp_store(self, conversations):
+		for conv in conversations:
+			conv[0] = self.lower_case(inp=True, sent=conv[0])
+			conv[0] = self.remove_punct(inp=True, sent=conv[0])
+			if conv[0] in self.generic_dict:
+				self.generic_dict[conv[0]].append(conv[1])
+			else:
+				self.generic_dict[conv[0]] = [conv[1]]
+
 	def curse_parse(self):
 		curse_resp = self.messages['curse']
 		self.annoyance -= 4
@@ -71,13 +102,14 @@ class Parser:
 	def level_one_parse(self):
 		words = self.curr_input.split()
 		# GENERAL PURPOSE TEXT WILL BE CHECKED BEFORE ALL THE BELOW CODE!!!
-		if any(word in words for word in self.curse_words):
+		if self.curr_input in self.generic_dict:
+			print(random.choice((self.generic_dict[self.curr_input])))
+		elif any(word in words for word in self.curse_words):
 			print(self.curse_parse())
 		elif any(word in words for word in self.universals):
 			print(self.universal_parse(words))
 		else:
 			pos_check = ispositive.is_positive(self.curr_input)
-			print(pos_check)
 			if pos_check == False:
 				help_resp = self.messages['help']
 				print(random.choice(help_resp))
@@ -90,5 +122,4 @@ class Parser:
 if __name__ == '__main__':
 	o = Parser()
 	o.user_input()
-	o.load_curse()
 	o.level_one_parse()
