@@ -1,21 +1,24 @@
 <html lang="en">
-
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Document</title>
-  <link href="{{url_for('static',filename='style.css')}}" rel="stylesheet" type"text/css"> </head>
- <body>
+  <link href="style.css" rel="stylesheet" type"text/css">
+  
+</head>
+<body>
+<img src="C:\Users\dev29\Desktop\FrontEnd\pizzy.png" alt="image" style="width:150px;height:100px;margin-right:-150px;margin-top: -700px;"><BR>
+<div class="container">
+	<div id="response"><span class="red">Pizza Bot:</span> Hello!  What'	s your tummy craving for today?<br><img      src="https://media.giphy.com/media/4ayiIWaq2VULC/giphy.gif" alt="image gif" style="width:150px;height:100px;  border-radius: 30px;" ></div>
 
-  <div class="container">
-    <div id="response"><span class="red">Pizza Bot:</span> Hello! Type something for me.</div>
+<center>	
+	<input  id="userInput" type="text" placeholder="Yes right here"/>
 
-    <center>
-      <input id="userInput" type="text" placeholder="Yes right here" />
-
-      <input type="submit" id="chatSend" value="send" onclick="reply()" onkeydown="enter()" />
-
-      <p>The chat bot responds to basic text.</p>
-    </center>
+	<input type="submit" id="chatSend" value="Send" onclick="reply()" onkeydown="enter()"/>
+		
+  <p>The chat bot responds to basic text.</p>
   </div>
+  
+  </center>
   <div class="wrapper">
       <svg class="pizza" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414">
     <defs>
@@ -40,27 +43,29 @@
     </g>
   </svg>
 </div>
-  <script>
-    window.setInterval(function () {
-      var elem =
-        document.getElementById("response");
-      elem.scrollTop = elem.scrollHeight;
-    }, 500);
+  
+<script>
+window.setInterval(function() {
+  var elem =
+      document.getElementById("response");
+  elem.scrollTop = elem.scrollHeight;
+}, 500);
 
-    document.addEventListener("keyup", function (e) {
-      if (e.keyCode == 13) {
-        reply();
-      }
-    });
-    function reply() {
-      var input = document.getElementById("userInput").value;
-      var chatbox = document.getElementById("response");
-      var userInput = input.toUpperCase();
-      chatbox.innerHTML += "<br/> <span style='color: blue;'>You:</span> " + input;
-      document.getElementById("userInput").value = '';
-    }
-  </script>
+document.addEventListener("keyup", function(e) {
+	if (e.keyCode == 13) {
+		reply();
+	}
+});
 
-  </body>
+function reply() {
+	var input = document.getElementById("userInput").value;
+	var chatbox = document.getElementById("response");
+	var userInput = input.toUpperCase();
 
+	chatbox.innerHTML += "<br/> <span style='color: blue;'>You:</span> " + input;
+	document.getElementById("userInput").value = '';
+}
+
+</script>
+</body>
 </html>
