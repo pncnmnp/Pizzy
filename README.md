@@ -1,3 +1,6 @@
+## Pizzy - A Pizza delivery chatbot
+![pizzy](https://github.com/pncnmnp/Pizzy/blob/master/FrontEnd/static/pizzy.png)
+
 ## Description
 **This project is created during [Mumbai Hackathon](https://mumbaihackathon.in/).** <br>This _chatbot_ is divided into three parts:
 * `Parser` ( implemented **from scratch** without any `NLP` or `ML` libraries. ). It contains scope for Universals or Keywords, **two-level** parser ( one for `screening` and other for `order placement` ), curse word detection, sentiment analysis ( in `ispositive.py` file ) and generic response generator.
