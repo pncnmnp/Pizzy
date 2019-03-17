@@ -2,13 +2,30 @@ categories:
 - welcome
 help:
 - Hi there! This is Pizzy, a pizza delivery chatbot! 
-  You can type "menu" for menu and "order <food-item>" for food
+  You can type "menu" for menu, "order <food-item>" for food and <quit> to leave
+quit:
+- Sorry to see you leave! Provide us your valuable feedback at pizzy-customer-care@gmail.com.
+top-food:
+- Grrrrrr. I can hear your tummy growling. Here are our top food items - 
+- Hungry for the best! Search no where! Here are our top food items - 
+menu:
+- Want to see what our talented Chef's can cook, type "menu"
+- Check our Chef's pride by typing "menu"
+- Our lip-smaking choices can be accessed by typing "menu"
+top-beve:
+- I have many things to quench that thirst of your - 
+- To quench your thirst, I recommend these top items - 
 conversations:
 - Fresh Pizza's are being baked by us every minute, Let's start with yours!
 - Chef says "Fire on Sir, Place your order!"
 - Let's start with the baking! What do you want to fill your tummy with ?
 - Grrrrr. Is that your tummy growling ? Let's begin the order!
 - We Welcome you to pizzy the best Pizza in town!
+order-placed:
+- Got it! Order Placed
+- Copy that Sir! Order Placed
+- Let me scribble it down
+- Let me jot that down
 address:
 - Look's like it's your first time! Will need an address Sir -
 - Till the time we import fairies, we will need your address -
@@ -17,6 +34,8 @@ prior:
 - Welcome! Good to see you back.
 - We missed you! Seeing your presence, our Chefs will be on fire tonight!
 - We are glad to see you again!
+referral-true:
+- Ok! We will provide you a discount of Rs. 100 on this transaction
 referral-to-avail:
 - Do you have a referral code to be availed -
 - Has any fairy ever told you about a magic number -

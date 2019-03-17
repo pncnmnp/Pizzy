@@ -7,8 +7,6 @@ app = Flask(__name__)
 def call():
     print("Call" )
 
-
 @app.route("/")
 def hello_world():
     return render_template("Frontend.html")
-

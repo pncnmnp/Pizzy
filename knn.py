@@ -11,4 +11,3 @@ df = np.array(df)
 neigh.fit(df[:, 0:3], df[:, 3])
 # tests
 print(neigh.predict([[1, 200, 50], [2, 1800, 100], [3, 750, 50]]))
-print(neigh.score(df[:, 0:3], df[:, 3]))
