@@ -20,6 +20,9 @@ To see how our parser works use:
 <br>
 `python3.6 parser.py`
 
+## Terminal Output
+![terminal-output](https://github.com/pncnmnp/Pizzy/blob/master/FrontEnd/terminal-output.gif)
+
 ## Contributers
 * Parth - [pncnmnp](https://github.com/pncnmnp)
 * Dhruvam - [iotarepeat](https://github.com/iotarepeat)
