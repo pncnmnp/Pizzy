@@ -28,3 +28,6 @@ To see how our parser works use:
 * Dhruvam - [iotarepeat](https://github.com/iotarepeat)
 * Sahil - [CoderSsVartak](https://github.com/CoderSsVartak)
 * Devesh - [dev2919](https://github.com/dev2919)
+
+#### Note
+As we are using Google Distance Matrix to get `estimate delivery time`, put your API_FILE_PATH in `maps.py`

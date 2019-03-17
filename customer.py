@@ -199,6 +199,7 @@ class Customer:
 			print("You have received referral code: "+str(self.referral_code)+", which on passing on to your friends can avail you Rs.100 off on your next Pizza!")
 		bill = generate_bill(items=self.orders, name=self.name, address=self.address, priority=self.priority)
 		bill.print_bill()
+		bill.delivery_time()
 
 	def execution_order(self):
 		self.init_db()
