@@ -1,0 +1,40 @@
+ <div class ="chip">
+    <div class="chip-message-container">
+      <div class="chip-text">Veg</div>
+    </div>
+  </div>
+  <div class ="chip">
+    <div class="chip-message-container">
+      <div class="chip-text">Non-veg</div>
+    </div>
+  </div>
+</div>
+
+
+==============CSS==============
+.chip {
+  width: 150px;
+  height: 40px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  background-color: #FFFFFF;
+  border: solid 1px #c0c9cc;
+  display: table;
+  float: left;
+  cursor: pointer;
+  margin: -480px -65px 500px 150px;
+  background:#1ddced;
+  
+  
+}
+.chip-message-container {
+  text-align: center;
+ 
+  padding: 15px 50px 5px 12px;
+}
+.chip-text {
+  font-family: TLCircular;
+  font-size: 15pt;
+  font-weight: normal;
+  color: #333333;
+}
