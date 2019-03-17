@@ -103,11 +103,11 @@ class Parser:
 			]
 			print(
 				tabulate(
-					data, headers=("Pizza", "ingredients", "Price"), tablefmt="grid"
+					data, headers=("Sides", "ingredients", "Price"), tablefmt="grid"
 				)
 			)
 			data = [(beve, beves[beve]["price"]) for beve in beves]
-			print(tabulate(data, headers=("Pizza", "Price"), tablefmt="grid"))
+			print(tabulate(data, headers=("Beverages", "Price"), tablefmt="grid"))
 
 		elif key == "top" or key == "hot" or key == "hungry":
 			# Trending food method will come here
