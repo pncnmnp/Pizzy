@@ -32,14 +32,14 @@ class generate_bill:
 
 	def print_bill(self):
 		data = []
-		data += ("Name:", self.name)
-		data += ("Delivery Address:", self.address)
-		data += ("Item", "Amount")
+		data.append(("Name:", self.name))
+		data.append(("Delivery Address:", self.address))
+		data.append(("Item", "Amount"))
 		for i in self.items:
-			data += (i[0], i[1])
+			data.append((i[0], i[1]))
 		total, discount = self.generate_amount()
-		data += ("Total Amount:", total)
-		data += ("Discount Applied:", discount)
+		data.append(("Total Amount:", total))
+		data.append(("Discount Applied:", discount))
 		print(tabulate(data, tablefmt="grid"))
 
 	def delivery_time(self):
