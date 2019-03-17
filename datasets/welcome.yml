@@ -2,7 +2,7 @@ categories:
 - welcome
 help:
 - Hi there! This is Pizzy, a pizza delivery chatbot! 
-  You can type "menu" for menu, "order <food-item>" for food and <quit> to leave
+  You can type "menu" for menu, "<quantity> <food-item>" for food and <quit> to leave
 quit:
 - Sorry to see you leave! Provide us your valuable feedback at pizzy-customer-care@gmail.com.
 top-food:

@@ -249,9 +249,7 @@ class Parser:
 					)
 					self.orders.append([words[0] + " " + words[1], 1])
 					notPlaced = False
-				elif ((words[0] in order_no) or (words[0] in order_no_w)) and words[
-					1
-				] in self.menu:
+				elif ((words[0] in order_no) or (words[0] in order_no_w)) and words[1] in self.menu:
 					self.printCk = True
 					print(random.choice(order_placed_resp) + " : " + words[1])
 					if words[0] in order_no:

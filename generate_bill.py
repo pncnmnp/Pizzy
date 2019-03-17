@@ -43,7 +43,10 @@ class generate_bill:
 		print(tabulate(data, tablefmt="grid"))
 
 	def delivery_time(self):
-		time = 15 + int(
-			(maps.calculate_dist("kandivali,India", self.address)).split(" ")[0]
-		)
-		print("Your food will be delivered to you in ", time, " minutes")
+		try:
+			time = 15 + int(
+				(maps.calculate_dist("kandivali,India", self.address)).split(" ")[0]
+			)
+			print("Your food will be delivered to you in ", time, " minutes")
+		except:
+			print("We estimate delivery time of 30 minutes")
