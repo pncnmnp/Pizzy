@@ -16,10 +16,10 @@ TODO:
 >> ADD the place order parsing [ done ]
 """
 
-
 class Parser:
 	def __init__(self):
 		self.curr_input = ""
+		self.printCk = False
 		self.universals = [
 			"cancel",
 			"top",
@@ -83,6 +83,7 @@ class Parser:
 		key = key[0]
 		if key == "cancel":
 			cancel_resp = self.messages["cancel"]
+			self.printCk = True
 			return random.choice(cancel_resp)
 
 		elif key == "menu":
@@ -90,6 +91,7 @@ class Parser:
 			sides = yaml.load(open("./datasets/sides.yml"))
 			beves = yaml.load(open("./datasets/beverages.yml"))
 			data = [(k, pizzas[k]["ingredients"], pizzas[k]["price"]) for k in pizzas]
+			self.printCk = True
 			print(
 				tabulate(
 					data, headers=("Pizza", "ingredients", "Price"), tablefmt="grid"
@@ -111,6 +113,7 @@ class Parser:
 			# Trending food method will come here
 			top_food = trending.read_csv_file("./datasets/menu.csv")
 			food_resp = self.messages["top-food"]
+			self.printCk = True
 			return (
 				random.choice(food_resp)
 				+ top_food[0][0]
@@ -124,6 +127,7 @@ class Parser:
 			# Trending beverages will come here
 			top_beve = trending.read_csv_file("./datasets/menu.csv")
 			beve_resp = self.messages["top-beve"]
+			self.printCk = True
 			return (
 				random.choice(beve_resp)
 				+ top_beve[2][0]
@@ -136,10 +140,12 @@ class Parser:
 		elif key == "help" or key == "about":
 			help_resp = self.messages["help"]
 			self.annoyance -= 2
+			self.printCk = True
 			return random.choice(help_resp)
 
 		elif key == "quit":
 			quit_resp = self.messages["quit"]
+			self.printCk = True
 			print(random.choice(quit_resp))
 			exit(0)
 
@@ -165,22 +171,27 @@ class Parser:
 	def curse_parse(self):
 		curse_resp = self.messages["curse"]
 		self.annoyance -= 4
+		self.printCk = True
 		return random.choice(curse_resp)
 
 	def level_one_parse(self):
 		words = self.curr_input.split()
 		if self.curr_input in self.generic_dict:
+			self.printCk = True
 			print(random.choice((self.generic_dict[self.curr_input])))
 		elif any(word in words for word in self.curse_words):
+			self.printCk = True
 			print(self.curse_parse())
 		elif any(word in words for word in self.universals):
 			val = self.universal_parse(words)
 			if val != None:
+				self.printCk = True
 				print(val)
 		else:
 			pos_check = ispositive.is_positive(self.curr_input)
 			if pos_check == False:
 				help_resp = self.messages["help"]
+				self.printCk = True
 				print(random.choice(help_resp))
 			elif pos_check == True:
 				self.order_parse(words)
@@ -228,6 +239,7 @@ class Parser:
 		if len(words) == 1 or len(words) == 2 or len(words) == 3:
 			if len(words) == 2:
 				if words[0] + " " + words[1] in self.menu:
+					self.printCk = True
 					print(
 						random.choice(order_placed_resp)
 						+ " : "
@@ -240,6 +252,7 @@ class Parser:
 				elif ((words[0] in order_no) or (words[0] in order_no_w)) and words[
 					1
 				] in self.menu:
+					self.printCk = True
 					print(random.choice(order_placed_resp) + " : " + words[1])
 					if words[0] in order_no:
 						self.orders.append([words[1], words[0]])
@@ -250,6 +263,7 @@ class Parser:
 
 			elif len(words) == 1:
 				if words[0] in self.menu:
+					self.printCk = True
 					print(random.choice(order_placed_resp) + " : " + words[0])
 					self.orders.append([words[0], 1])
 					notPlaced = False
@@ -257,6 +271,7 @@ class Parser:
 			elif len(words) == 3:
 				if words[0] in order_no or words[0] in order_no_w:
 					if words[1] + " " + words[2] in self.menu:
+						self.printCk = True
 						print(
 							random.choice(order_placed_resp)
 							+ " : "
@@ -276,6 +291,7 @@ class Parser:
 			for word in order_words:
 				if word in words:
 					if words[words.index(word) + 1] in self.menu:
+						self.printCk = True
 						print(
 							random.choice(order_placed_resp)
 							+ " : "
@@ -287,6 +303,7 @@ class Parser:
 						words[words.index(word) + 2] in self.menu
 						and words[words.index(word) + 1] in order_no_w
 					):
+						self.printCk = True
 						print(
 							random.choice(order_placed_resp)
 							+ " : "
@@ -303,6 +320,7 @@ class Parser:
 						words[words.index(word) + 2] in self.menu
 						and words[words.index(word) + 1] in order_no
 					):
+						self.printCk = True
 						print(
 							random.choice(order_placed_resp)
 							+ " : "
@@ -318,6 +336,7 @@ class Parser:
 						+ words[words.index(word) + 2]
 						in self.menu
 					):
+						self.printCk = True
 						print(
 							random.choice(order_placed_resp)
 							+ " : "
@@ -341,6 +360,7 @@ class Parser:
 						in self.menu
 						and words[words.index(word) + 1] in order_no_w
 					):
+						self.printCk = True
 						print(
 							random.choice(order_placed_resp)
 							+ " : "
@@ -364,6 +384,7 @@ class Parser:
 						in self.menu
 						and words[words.index(word) + 1] in order_no
 					):
+						self.printCk = True
 						print(
 							random.choice(order_placed_resp)
 							+ " : "
@@ -379,10 +400,10 @@ class Parser:
 								words[words.index(word) + 1],
 							]
 						)
-
+		if self.printCk == False:
+			print("Sorry didn't get you there!, To get help type 'help'!")
 
 if __name__ == "__main__":
 	o = Parser()
 	o.user_input()
 	o.level_one_parse()
-
