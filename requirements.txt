@@ -1,7 +1,7 @@
 numpy==1.22.0
-Flask==1.0.2
+Flask==2.3.2
 pandas==0.24.2
-nltk==3.4.5
+nltk==3.6.6
 textblob==0.15.3
 tabulate==0.8.3
 scikit_learn==0.20.3
